@@ -1,0 +1,25 @@
+{
+
+  "description": "Autofills Lever, Greenhouse, (working on Jobvite) forms.",
+  "manifest_version": 2,
+  "name": "JobPls",
+  "version": "1.0",
+  "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/beastify",
+  "icons": {
+    "48": "icons/icon_1.png"
+  },
+  "options_ui": {
+      "page": "options.html"
+  },
+
+  "permissions": [
+    "activeTab", "storage"
+  ],  
+
+  "browser_action": {
+    "default_icon": "icons/icon_1.png",
+    "default_title": "JobPls",
+    "default_popup": "popup/choose_job.html"
+  }
+
+}
