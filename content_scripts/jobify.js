@@ -1,6 +1,6 @@
 function handleMenu(request, sender, sendResponse) {
-  leverFill();
-  browser.runtime.onMessage.removeListener(handleMenu);
+	pickService();
+	browser.runtime.onMessage.removeListener(handleMenu);
 }
 
 /*
@@ -16,6 +16,62 @@ function leverFill() {
 			var field = divs[i].getElementsByTagName("input");
 			var name = getType(field[0].name);
 			console.log(name);
+			switch(name){
+				case "fullname":
+					field[0].value = res.fullname;
+					break
+				case "email":
+					field[0].value = res.email;
+					break
+				case "phone":
+					field[0].value = res.phone;
+					break
+				case "comp":
+					field[0].value = res.company;
+					break
+				case "lin":
+					field[0].value = res.linkedin;
+					break
+				case "twi":
+					field[0].value = res.twitter;
+					break
+				case "por":
+					por = true;
+					field[0].value = res.personal;
+					break
+				case "git":
+					por = true;
+					field[0].value = res.github;
+					break
+				case "other":
+					if (por){break;}
+					else{
+						field[0].value = res.personal;
+					}
+				default:
+					break
+			}
+		}
+	})
+}
+
+function iframeRef( frameRef ) {
+    return frameRef.contentWindow
+        ? frameRef.contentWindow.document
+        : frameRef.contentDocument
+}
+
+
+function greenhouseFill() {
+	var por = false;
+	var gettingItem = browser.storage.local.get();
+	gettingItem.then((res) => {
+		res = res[0];
+		console.log(window.frames['grnhse_iframe'])
+		var divs = inside.getElementsByClassName("field");
+		for (var i = 0; i < divs.length; i++) {
+			var field = divs[i].getElementsByTagName("input");
+			var name = getType(field[0].id);
 			switch(name){
 				case "fullname":
 					field[0].value = res.fullname;
@@ -98,13 +154,18 @@ function getType(name) {
 }
 
 function pickService() {
+	var source = document.getElementsByTagName('html')[0].innerHTML;
+	if (source.includes("lever")){
+		leverFill();
+	}
+	else if (source.includes("greenhouse")){
+		console.log("greenhouse");
+		greenhouseFill();
+	}
+	else if (source.includes("jobvite")){
+		console.log("not quite ready");
+	}
   /*Figure out which application type it is*/
-}
-function removeEverything() {
-  while (document.body.firstChild) {
-	console.log("abc");
-    document.body.firstChild.remove();
-  }
 }
 
 
